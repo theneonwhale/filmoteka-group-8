@@ -1,0 +1,58 @@
+// Палитра
+
+// Текст
+// цвет основного текста черный: #000000
+// цвет основного текста белый: #FFFFFF
+// цвет текста футера: #545454
+// цвет текста акцента: #FF6B08
+// цвет текста характеристик карточки фильма: #8C8C8C
+// цвет текста предупреждений: #FF001B
+
+// Фон
+// цвет фона хедера черный: #000000
+// цвет фона хедера серый: #818181
+// цвет основного фона: #FFFFFF
+// цвет фона рейтинга: #FF6B01
+// цвет фона голосов: #F7F7F7
+// цвет фона футера: #F7F7F7
+
+// Кнопки
+// цвет активной кнопки: #FF6B01
+// цвет кнопки стрелки: #F7F7F7
+// цвет рамки кнопки черный: #000000
+// цвет рамки кнопки белый: #FFFFFF
+
+// цвет акцента: #FF6B08
+
+// Font
+$basic-font: 'Roboto', sans-serif;
+
+// Colors
+// Main and Accent colors
+$accent-color: #ff6b08;
+$primary-white-color: #ffffff;
+$primary-black-color: #000000;
+
+// Text colors
+$footer-text-color: #545454;
+$card-info-text-color: #8c8c8c;
+$warning-text-color: #ff001b;
+
+// Background colors
+$bg-header-grey-color: #818181;
+$bg-rate-color: #ff6b01;
+$bg-votes-color: #f7f7f7;
+$bg-footer-color: #f7f7f7;
+
+// Buttons
+$btn-active-color: #ff6b01;
+$btn-arrow-color: #f7f7f7;
+
+// Breakpoints
+$mobile: 320px;
+$tablet: 768px;
+$desktop: 1024px;
+
+div {
+  color: $accent-color;
+}
