@@ -1,7 +1,7 @@
 {
-  "name": "goit-js-hw-13-image-finder",
+  "name": "filmoteka-group-8",
   "version": "1.0.0",
-  "description": "timer",
+  "description": "filmoteka",
   "main": "index.js",
   "scripts": {
     "start": "webpack-dev-server --env.mode development --config ./webpack/config.js",
@@ -11,19 +11,18 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/theneonwhale/goit-js-hw-13-image-finder.git"
+    "url": "git+https://github.com/theneonwhale/filmoteka-group-8.git"
   },
-  "author": "Andrii Kylymnyk",
+  "author": "Group 8",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/theneonwhale/goit-js-hw-13-image-finder/issues"
+    "url": "https://github.com/theneonwhale/filmoteka-group-8/issues"
   },
-  "homepage": "https://github.com/theneonwhale/goit-js-hw-13-image-finder#readme",
+  "homepage": "https://github.com/theneonwhale/filmoteka-group-8#readme",
   "devDependencies": {
     "@babel/core": "^7.11.6",
     "@babel/plugin-proposal-class-properties": "^7.10.4",
     "@babel/preset-env": "^7.11.5",
-    "@pnotify/core": "^5.1.2",
     "autoprefixer": "^9.8.6",
     "babel-loader": "^8.1.0",
     "clean-webpack-plugin": "^3.0.0",
@@ -49,11 +48,7 @@
     "webpackbar": "^4.0.0"
   },
   "dependencies": {
-    "basiclightbox": "^5.0.3",
     "core-js": "^3.6.5",
     "handlebars": "^4.7.6",
-    "infinite-scroll": "^3.0.6",
-    "lodash.debounce": "^4.0.8",
-    "pnotify": "^5.1.2"
   }
 }
