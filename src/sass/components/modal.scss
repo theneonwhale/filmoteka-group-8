@@ -1,0 +1,90 @@
+main {
+  position: relative;
+}
+.backdrop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  padding: 60px 0px;
+  pointer-events: none;
+  opacity: 0;
+}
+.backdrop.opened {
+  opacity: 1;
+  pointer-events: initial;
+}
+.backdrop-content {
+  display: flex;
+
+  & > li {
+    width: 50%;
+  }
+
+  & .content-img {
+    margin-right: 30px;
+  }
+}
+.backdrop-content .content-descr {
+  margin-bottom: 20px;
+}
+.content-descr {
+  & h2 {
+    margin-bottom: 20px;
+    font: 500 30px/1.17 'Roboto', sans-serif;
+    text-transform: uppercase;
+  }
+
+  & ul > li {
+    display: flex;
+    margin-bottom: 10px;
+    font: 500 12px/1.33 'Roboto', sans-serif;
+  }
+  & h3 {
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    font: 500 12px/1.33 'Roboto', sans-serif;
+  }
+  & p {
+    margin-bottom: 20px;
+    font: 500 12px/1.66 'Roboto', sans-serif;
+  }
+}
+.descr-header {
+  font: 500 12px/1.33 'Roboto', sans-serif;
+  color: #8c8c8c;
+  margin-right: 95px;
+}
+.vote {
+  padding: 1px 10px;
+  background: #ff6b01;
+  color: #fff;
+  border-radius: 5px;
+}
+.btn-list {
+  display: flex;
+
+  & li:not(:last-child) {
+    margin-right: 15px;
+  }
+}
+.backdrop button {
+  padding: 14px 20px;
+  border: 1px solid #000000;
+  box-sizing: border-box;
+  border-radius: 5px;
+  font: 500 12px/1.33 'Roboto', sans-serif;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  text-transform: uppercase;
+  background: #fff;
+  transition: all 250ms linear;
+
+  &:hover {
+    background: #ff6b01;
+    color: #fff;
+    border: none;
+  }
+}

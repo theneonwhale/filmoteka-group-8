@@ -1,3 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap');
+
 @import './utils/utils.scss';
+@import './utils/base.scss';
 @import './utils/placeholders.scss';
-@import './components/header-my-library';
+@import './components/header-my-library.scss';
+@import './components/main.content.scss';
+@import './components/footer.scss';
+@import './components/modal.scss';

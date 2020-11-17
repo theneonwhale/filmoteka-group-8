@@ -1,0 +1,43 @@
+.cards-content {
+  padding: 60px 0px;
+}
+
+.js-cards-markup {
+  display: flex;
+  flex-wrap: wrap;
+  margin: -15px;
+}
+.js-cards-markup > li {
+  width: calc((100% - 90px) / 3);
+  margin: 15px;
+
+  @media screen and (max-width: 768px) {
+    width: calc((100% - 60px) / 2);
+  }
+  @media screen and (max-width: 480px) {
+    width: calc(100% - 30px);
+  }
+}
+.js-cards-markup a {
+  // color: $accent-color;
+  color: #ff6b08;
+}
+.js-cards-markup > li img {
+  margin-bottom: 10px;
+  border-radius: 5px;
+}
+.descr ul {
+  display: flex;
+}
+.descr .film-name {
+  font: 500 12px/1.33 'Roboto', sans-serif;
+  text-transform: uppercase;
+  color: #000;
+}
+.descr ul {
+  font: 500 12px/1.2 'Roboto', sans-serif;
+}
+.descr .film-genre {
+  margin-right: 5px;
+  position: relative;
+}
