@@ -29,5 +29,6 @@ app.get('/my-library', (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log('App listen 4444');
+  console.log('App listen ' + PORT);
+  console.log(`http://localhost:${PORT}/`);
 });
