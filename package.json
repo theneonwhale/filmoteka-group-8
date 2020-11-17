@@ -4,7 +4,8 @@
   "description": "filmoteka",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server --env.mode development --config ./webpack/config.js",
+    "start": "node ./src/js/app.js",
+    "dev": "webpack-dev-server --env.mode development --config ./webpack/config.js",
     "build": "webpack --env.mode production --config ./webpack/config.js",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",

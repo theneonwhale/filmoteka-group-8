@@ -1,6 +1,8 @@
 const express = require('express');
 const exhbs = require('express-handlebars');
 
+const PORT = process.env.PORT || 7777;
+
 const app = express();
 
 app.use(express.static('public'));
@@ -26,6 +28,6 @@ app.get('/my-library', (req, res) => {
   });
 });
 
-app.listen(4444, () => {
+app.listen(PORT, () => {
   console.log('App listen 4444');
 });
