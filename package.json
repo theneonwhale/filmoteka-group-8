@@ -27,5 +27,8 @@
     "posthtml": "^0.14.0",
     "posthtml-include": "^1.6.0",
     "sass": "^1.26.9"
+  },
+  "dependencies": {
+    "lodash.debounce": "^4.0.8"
   }
 }

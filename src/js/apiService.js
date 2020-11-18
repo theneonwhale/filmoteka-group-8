@@ -8,13 +8,14 @@ export default class ImagesApiService {
   }
 
   async fetchImages() {
-    const url = `${BASE_URL}550/?api_key=${API_KEY}`;
+    const url = `${BASE_URL}popular/?api_key=${API_KEY}&page_size=18`;
     const response = await fetch(url);
     const movies = await response.json();
+    const movie = movies.results;
 
     this.incrementPage();
 
-    return movies;
+    return movie;
   }
 
   incrementPage() {
