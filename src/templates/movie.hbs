@@ -1,14 +1,14 @@
 {{#each this}}
 <li>
-    {{!-- <a href="" class="card-link"> --}}
-    <img src="https://image.tmdb.org/t/p/w300{{poster_path}}" alt="картинка фильма" width="280">
-    <div class="descr">
-        <h2 class="film-name">{{original_title}}</h2>
-        <ul>
-            <li class="film-genre">{{vote_average}} | </li>
-            <li class="film-year">{{release_date}}</li>
-        </ul>
+    <div>
+        <img src="https://image.tmdb.org/t/p/w300{{poster_path}}" alt="картинка фильма" width="280">
+        <div class="descr">
+            <h2 class="film-name">{{original_title}}</h2>
+            <ul>
+                <li class="film-genre">{{vote_average}} | </li>
+                <li class="film-year">{{release_date}}</li>
+            </ul>
+        </div>
     </div>
-    {{!-- </a> --}}
 </li>
 {{/each}}
