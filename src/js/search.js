@@ -24,11 +24,10 @@ refs.inputField.addEventListener('input', debounce(getFilmData, 500));
 
 function getFilmData(e) {
   if (e.target.value) {
-    fetchFilm(refs.inputField.value).then(results => {
+    fetchFilm(e.target.value).then(results => {
       console.log(results);
       if (results.length === 0) {
         refs.errorEl.style.display = 'block';
-        // refs.container.innerHTML = '';
       } else {
         refs.errorEl.style.display = 'none';
         refs.container.innerHTML = '';
@@ -36,5 +35,7 @@ function getFilmData(e) {
         refs.container.insertAdjacentHTML('afterbegin', cardMarckup);
       }
     });
+  } else if (e.target.value === '') {
+    location.reload();
   }
 }
