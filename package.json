@@ -4,7 +4,7 @@
   "description": "filmoteka",
   "main": "index.js",
   "scripts": {
-    "dev": "parcel src/index.html",
+    "dev": "parcel src/*.html",
     "build": "parcel build src/*.html",
     "predeploy": "npm run build -- --public-url /filmoteka-group-8/",
     "deploy": "gh-pages -d dist"
@@ -26,9 +26,7 @@
     "parcel-plugin-nuke-dist": "^1.0.1",
     "posthtml": "^0.14.0",
     "posthtml-include": "^1.6.0",
-    "sass": "^1.26.9"
-  },
-  "dependencies": {
-    "lodash.debounce": "^4.0.8"
+    "sass": "^1.26.9",
+    "tui-pagination": "^3.4.0"
   }
 }

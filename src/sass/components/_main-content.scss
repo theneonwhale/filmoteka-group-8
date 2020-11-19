@@ -5,6 +5,7 @@
 
 .js-cards-markup {
   display: flex;
+  justify-content: center;
   flex-wrap: wrap;
   margin: -15px;
 }
@@ -12,15 +13,16 @@
   width: calc(100% - 30px);
   margin: 15px;
 
-  @media screen and (min-width: $tablet) {
+  color: $accent-color;
+
+  @media screen and (max-width: 768px) {
     width: calc((100% - 60px) / 2);
   }
-  @media screen and (min-width: $desktop) {
-    width: calc((100% - 90px) / 3);
+  @media screen and (max-width: 480px) {
+    width: calc(100% - 30px);
+    display: flex;
+    justify-content: center;
   }
-}
-.js-cards-markup a {
-  color: $accent-color;
 }
 .js-cards-markup > li img {
   margin-bottom: 10px;

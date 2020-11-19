@@ -1,26 +1,75 @@
 header {
+  height: 230px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 41px;
+  padding-bottom: 60px;
+
+  background-color: $primary-black-color;
   background-image: linear-gradient(
       90deg,
       rgba(0, 0, 0, 0.56),
       rgba(0, 0, 0, 0.56)
     ),
-    url(../images/header-bg.jpg);
-  min-height: 230px;
+    url(../images/header/header-bcg-320.jpg);
   background-repeat: no-repeat;
   background-position: 50% 50%;
   background-size: cover;
   color: $primary-white-color;
+
+  @media screen and (max-width: $mobile) {
+    max-width: $mobile;
+  }
+
+  @media screen and (min-width: $mobile + 1px) and (max-width: $tablet) {
+    max-width: $tablet;
+
+    background-image: linear-gradient(
+        90deg,
+        rgba(0, 0, 0, 0.56),
+        rgba(0, 0, 0, 0.56)
+      ),
+      url(../images/header/header-bcg-768.jpg);
+  }
+
+  @media screen and (min-width: $tablet + 1px) {
+    background-image: linear-gradient(
+        90deg,
+        rgba(0, 0, 0, 0.56),
+        rgba(0, 0, 0, 0.56)
+      ),
+      url(../images/header/header-bcg-1024.jpg);
+  }
+
+  @media screen and (min-width: $desktop + 1px) {
+    background-size: contain;
+  }
 }
+
+.header {
+  // @extend %container;
+
+  max-width: 1024px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0px 70px;
+  flex-grow: 1;
+
+  @media screen and (max-width: 480px) {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+}
+
 .main-nav {
   display: flex;
-  align-items: center;
+  align-items: baseline;
   justify-content: space-between;
-  padding-top: 41px;
   margin-bottom: 37px;
 }
 .logo {
   display: flex;
-  align-items: center;
+  align-items: baseline;
 }
 .logo img {
   margin-right: 12px;

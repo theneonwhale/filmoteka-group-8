@@ -31,7 +31,12 @@ a {
   text-decoration: none;
 }
 body {
-  font-family: 'Roboto', sans-serif;
+  font-family: $basic-font;
+  font-weight: 500;
+  font-size: 12px;
+  color: $primary-black-color;
+
+  background-color: $primary-white-color;
 }
 .visually-hidden {
   position: absolute;
