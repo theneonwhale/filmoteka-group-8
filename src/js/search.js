@@ -5,6 +5,7 @@ const refs = {
   container: document.querySelector('.js-cards-markup'),
   errorEl: document.querySelector('.error-text'),
   inputField: document.querySelector('.search-form input'),
+  spinner: document.querySelector('.spinner'),
 };
 
 function fetchFilm(search) {
@@ -23,6 +24,7 @@ function fetchFilm(search) {
 refs.inputField.addEventListener('input', debounce(getFilmData, 500));
 
 function getFilmData(e) {
+  refs.spinner.classList.add('active');
   if (e.target.value) {
     fetchFilm(e.target.value).then(results => {
       console.log(results);
@@ -33,6 +35,7 @@ function getFilmData(e) {
         refs.container.innerHTML = '';
         const cardMarckup = itemTpl(results);
         refs.container.insertAdjacentHTML('afterbegin', cardMarckup);
+        refs.spinner.classList.remove('active');
       }
     });
   } else if (e.target.value === '') {

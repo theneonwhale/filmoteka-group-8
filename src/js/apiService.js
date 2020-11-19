@@ -33,4 +33,12 @@ export default class ImagesApiService {
   set query(newQuery) {
     this.searchQuery = newQuery;
   }
+
+  idQuery(id) {
+    return fetch(
+      `https://api.themoviedb.org/3/find/${id}?api_key=${API_KEY}`,
+    ).then(response => response.json());
+  }
 }
+
+// `${BASE_URL}${id}?api_key=${API_KEY}`;
