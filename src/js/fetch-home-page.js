@@ -5,6 +5,7 @@ import 'tui-pagination/dist/tui-pagination.css';
 const BASE_URL = 'https://api.themoviedb.org/3/';
 const API_KEY = '726653b8cacb73d155407508fdc35e60';
 
+// https://api.themoviedb.org/3/movie/popular/?api_key=726653b8cacb73d155407508fdc35e60
 // https://api.themoviedb.org/3/?api_key=726653b8cacb73d155407508fdc35e60
 
 const movieListEL = document.querySelector('.js-cards-markup');
@@ -22,7 +23,7 @@ fetchDayMovies().then(responce => {
   const myPagination = new Pagination(paginationContainer, {
     totalItems: responce.total_pages,
     itemsPerPage: 20,
-    visiblePages: 5,
+    visiblePages: 4,
     centerAlign: true,
   });
 
