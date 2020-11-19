@@ -11,6 +11,8 @@
   width: calc((100% - 90px) / 3);
   margin: 15px;
 
+  color: $accent-color;
+
   @media screen and (max-width: 768px) {
     width: calc((100% - 60px) / 2);
   }
@@ -18,10 +20,9 @@
     width: calc(100% - 30px);
   }
 }
-.js-cards-markup a {
-  // color: $accent-color;
-  color: #ff6b08;
-}
+// .js-cards-markup a {
+// color: $accent-color;
+// }
 .js-cards-markup > li img {
   margin-bottom: 10px;
   border-radius: 5px;
