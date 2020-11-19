@@ -1,5 +1,6 @@
 .cards-content {
   padding: 60px 0px;
+  min-height: 60vh;
 }
 
 .js-cards-markup {
@@ -9,7 +10,7 @@
   margin: -15px;
 }
 .js-cards-markup > li {
-  width: calc((100% - 90px) / 3);
+  width: calc(100% - 30px);
   margin: 15px;
 
   color: $accent-color;
@@ -26,6 +27,7 @@
 .js-cards-markup > li img {
   margin-bottom: 10px;
   border-radius: 5px;
+  width: 100%;
 }
 .descr ul {
   display: flex;
@@ -33,7 +35,7 @@
 .descr .film-name {
   font: 500 12px/1.33 'Roboto', sans-serif;
   text-transform: uppercase;
-  color: #000;
+  color: $primary-black-color;
 }
 .descr ul {
   font: 500 12px/1.2 'Roboto', sans-serif;

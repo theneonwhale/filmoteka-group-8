@@ -1,0 +1,32 @@
+{{#each this}}
+<li class="content-img">
+    <img src="https://image.tmdb.org/t/p/w200{{poster_path}}" alt="{{title}}">
+</li>
+<li class="content-descr">
+    <h2>{{title}}</h2>
+    <ul>
+        <li>
+            <p class="descr-header">{{vote_count}} / Votes</p>
+            <p><span class="vote">{{vote_average}}</span> / ggg</p>
+        </li>
+        <li>
+            <p class="descr-header">Popularity</p>
+            <p>{{popularity}}</p>
+        </li>
+        <li>
+            <p class="descr-header">Original Title</p>
+            <p>{{original_title}}</p>
+        </li>
+        <li>
+            <p class="descr-header">Genre</p>
+            <p>{{genres.name}}</p>
+        </li>
+        <h3>About</h3>
+        <p>{{overview}}</p>
+        <ul class="btn-list">
+            <li><button class="js-btn watched-btn">add to Watched</button></li>
+            <li><button class="js-btn queue-btn">add to queue</button></li>
+        </ul>
+    </ul>
+</li>
+{{/each}}

@@ -1,3 +1,64 @@
+//  trishch
+// .spinner.active {
+//   opacity: 1;
+// }
+// .spinner {
+//   opacity: 0;
+//   position: absolute;
+//   top: 50%;
+//   left: 50%;
+//   margin: auto;
+//   box-sizing: border-box;
+//   background-clip: padding-box;
+//   width: 200px;
+//   height: 200px;
+//   border-radius: 100px;
+//   border: 4px solid $footer-text-color;
+//   -webkit-mask: linear-gradient(rgba(0, 0, 0, 0.1), #000000 90%);
+//   transform-origin: 50% 60%;
+//   transform: rotateX(66deg) translate(-50%, -50%) perspective(200px);
+//   animation: spinner-wiggle 1.2s infinite;
+//   pointer-events: none;
+// }
+// .spinner:before,
+// .spinner:after {
+//   content: '';
+//   position: absolute;
+//   margin: -4px;
+//   box-sizing: inherit;
+//   width: inherit;
+//   height: inherit;
+//   border-radius: inherit;
+//   opacity: 0.05;
+//   border: inherit;
+//   border-color: transparent;
+//   animation: spinner-spin 1.2s cubic-bezier(0.6, 0.2, 0, 0.8) infinite,
+//     spinner-fade 1.2s linear infinite;
+// }
+
+// .spinner:before {
+//   border-top-color: $accent-color;
+// }
+
+// .spinner:after {
+//   border-top-color: $warning-text-color;
+//   animation-delay: 0.3s;
+// }
+
+// @keyframes spinner-spin {
+//   100% {
+//     transform: rotate(360deg);
+//   }
+// }
+// @keyframes spinner-fade {
+//   20% {
+//     opacity: 0.1;
+//   }
+//   40% {
+//     opacity: 1;
+//   }
+//   60% {
+//     opacity: 0.1;
 .lds-circle {
   display: inline-block;
   transform: translateZ(1px);
