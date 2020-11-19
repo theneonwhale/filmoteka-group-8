@@ -21,6 +21,7 @@
   "homepage": "https://github.com/theneonwhale/filmoteka-group-8#readme",
   "devDependencies": {
     "gh-pages": "^3.1.0",
+    "lodash.debounce": "^4.0.8",
     "parcel-bundler": "^1.12.4",
     "parcel-plugin-handlebars-precompile": "^1.0.2",
     "parcel-plugin-nuke-dist": "^1.0.1",
