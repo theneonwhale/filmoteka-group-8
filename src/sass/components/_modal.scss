@@ -6,8 +6,10 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background: #fff;
-  margin: 100px 0;
+  background: #ffffff;
+  // margin: 100px 0;
+  padding: 5%;
+  width: 75%;
 }
 .backdrop {
   position: fixed;
@@ -25,14 +27,27 @@
   pointer-events: initial;
 }
 .backdrop-content {
-  display: flex;
+  @media screen and (min-width: 600px) {
+    display: flex;
+
+    & > li {
+      width: 50%;
+    }
+  }
+  // @media screen and (min-width: 1024px) {
+  //   min-width: 142px;
+  // }
 
   & > li {
-    width: 50%;
+    width: 100%;
   }
 
   & .content-img {
     margin-right: 30px;
+
+    & > img {
+      width: 100%;
+    }
   }
 }
 .backdrop-content .content-descr {
@@ -56,14 +71,16 @@
     font: 500 12px/1.33 'Roboto', sans-serif;
   }
   & p {
-    margin-bottom: 20px;
     font: 500 12px/1.66 'Roboto', sans-serif;
+  }
+  & .overview {
+    margin-bottom: 20px;
   }
 }
 .descr-header {
   font: 500 12px/1.33 'Roboto', sans-serif;
   color: #8c8c8c;
-  margin-right: 95px;
+  width: 50%;
 }
 .vote {
   padding: 1px 10px;
@@ -73,6 +90,10 @@
 }
 .btn-list {
   display: flex;
+
+  & li {
+    width: 50%;
+  }
 
   & li:not(:last-child) {
     margin-right: 15px;
@@ -86,14 +107,22 @@
   font: 500 12px/1.33 'Roboto', sans-serif;
   display: flex;
   align-items: center;
+  justify-content: center;
   text-align: center;
   text-transform: uppercase;
   background: #fff;
   transition: all 250ms linear;
+  // min-width: 142px;
 
   &:hover {
     background: #ff6b01;
     color: #fff;
     border: none;
+  }
+  // @media screen and (min-width: 768px) {
+  //   min-width: 80px;
+  // }
+  @media screen and (min-width: 1024px) {
+    min-width: 142px;
   }
 }

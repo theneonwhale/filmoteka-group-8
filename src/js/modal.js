@@ -62,7 +62,6 @@ const refs = {
   modalContent: document.querySelector('.backdrop-content'),
 };
 
-window.addEventListener('keydown', onEscBtnClick);
 refs.cardsContainer.addEventListener('click', onCardClick);
 refs.backdrop.addEventListener('click', onBackdropClick);
 
@@ -74,6 +73,7 @@ function onCardClick(e) {
   fetchFilm(id);
 
   refs.backdrop.classList.add('opened');
+  window.addEventListener('keydown', onEscBtnClick);
 }
 
 function fetchFilm(id) {
