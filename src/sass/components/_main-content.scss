@@ -15,11 +15,11 @@
 
   color: $accent-color;
 
-  @media screen and (max-width: 768px) {
+  @media screen and (min-width: 768px) {
     width: calc((100% - 60px) / 2);
   }
-  @media screen and (max-width: 480px) {
-    width: calc(100% - 30px);
+  @media screen and (min-width: 1024px) {
+    width: calc((100% - 90px) / 3);
     display: flex;
     justify-content: center;
   }

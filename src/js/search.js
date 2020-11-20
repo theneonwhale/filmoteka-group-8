@@ -1,5 +1,6 @@
 import debounce from 'lodash.debounce';
-import itemTpl from '../templates/card-item.hbs';
+// import itemTpl from '../templates/card-item.hbs';
+import movieItemsTpl from '../templates/movie.hbs';
 
 const refs = {
   container: document.querySelector('.js-cards-markup'),
@@ -24,18 +25,17 @@ function fetchFilm(search) {
 refs.inputField.addEventListener('input', debounce(getFilmData, 500));
 
 function getFilmData(e) {
-  refs.spinner.classList.add('active');
+  // refs.spinner.classList.add('active');
   if (e.target.value) {
     fetchFilm(e.target.value).then(results => {
-      console.log(results);
       if (results.length === 0) {
         refs.errorEl.style.display = 'block';
       } else {
         refs.errorEl.style.display = 'none';
         refs.container.innerHTML = '';
-        const cardMarckup = itemTpl(results);
+        const cardMarckup = movieItemsTpl(results);
         refs.container.insertAdjacentHTML('afterbegin', cardMarckup);
-        refs.spinner.classList.remove('active');
+        // refs.spinner.classList.remove('active');
       }
     });
   } else if (e.target.value === '') {
