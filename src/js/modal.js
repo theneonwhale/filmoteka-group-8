@@ -8,10 +8,11 @@ const refs = {
 
 refs.cardsContainer.addEventListener('click', onCardClick);
 refs.backdrop.addEventListener('click', onBackdropClick);
+let id = '';
 
 function onCardClick(e) {
   const card = e.target.classList.contains('film-img');
-  const id = e.target.dataset.id;
+  id = e.target.dataset.id;
   // console.log(e.target);
   // console.log(id);
   if (!card) {
@@ -60,4 +61,21 @@ function onEscBtnClick(e) {
     return;
   }
   closeModal();
+}
+
+document.querySelector('.modal').addEventListener('click', onBtnClick);
+function onBtnClick(event) {
+  event.preventDefault();
+  console.log(id);
+
+  if (event.target.nodeName !== 'BUTTON') {
+    return;
+  }
+
+  if (event.target.classList.contains('watched-btn')) {
+    localStorage.setItem('watched', id);
+  } else if (event.target.classList.contains('queue-btn')) {
+    localStorage.setItem('queued', id);
+  }
+  console.log(localStorage);
 }
