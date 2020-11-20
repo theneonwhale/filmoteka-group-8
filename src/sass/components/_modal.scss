@@ -1,12 +1,13 @@
 // main {
 //   position: relative;
 // }
-.container.modal {
+.modal {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   background: #fff;
+  margin: 100px 0;
 }
 .backdrop {
   position: fixed;
@@ -17,6 +18,7 @@
   // padding: 60px 0px;
   pointer-events: none;
   opacity: 0;
+  overflow-y: scroll;
 }
 .backdrop.opened {
   opacity: 1;

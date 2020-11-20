@@ -69,6 +69,8 @@ refs.backdrop.addEventListener('click', onBackdropClick);
 function onCardClick(e) {
   e.preventDefault();
   const id = e.target.dataset.id;
+  console.log(e.target);
+  console.log(id);
   fetchFilm(id);
 
   refs.backdrop.classList.add('opened');
@@ -76,7 +78,7 @@ function onCardClick(e) {
 
 function fetchFilm(id) {
   return fetch(
-    `https://api.themoviedb.org/3/movie/299536?api_key=726653b8cacb73d155407508fdc35e60&language=en-US`,
+    `https://api.themoviedb.org/3/movie/${id}?api_key=726653b8cacb73d155407508fdc35e60&language=en-US`,
   )
     .then(response => response.json())
     .then(movie => {
