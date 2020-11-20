@@ -9,6 +9,8 @@ const refs = {
 refs.cardsContainer.addEventListener('click', onCardClick);
 refs.backdrop.addEventListener('click', onBackdropClick);
 let id = '';
+let watchedFilmsIdArr = [];
+let queuedFilmsIdArr = [];
 
 function onCardClick(e) {
   const card = e.target.classList.contains('film-img');
@@ -73,9 +75,12 @@ function onBtnClick(event) {
   }
 
   if (event.target.classList.contains('watched-btn')) {
-    localStorage.setItem('watched', id);
+    watchedFilmsIdArr.push(id);
+    console.log(watchedFilmsIdArr);
+    localStorage.setItem('watched', JSON.stringify(watchedFilmsIdArr));
   } else if (event.target.classList.contains('queue-btn')) {
-    localStorage.setItem('queued', id);
+    queuedFilmsIdArr.push(id);
+    localStorage.setItem('queued', JSON.stringify(watchedFilmsIdArr));
   }
   console.log(localStorage);
 }
