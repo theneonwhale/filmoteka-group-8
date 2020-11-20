@@ -66,10 +66,14 @@ refs.cardsContainer.addEventListener('click', onCardClick);
 refs.backdrop.addEventListener('click', onBackdropClick);
 
 function onCardClick(e) {
-  e.preventDefault();
+  const card = e.target.classList.contains('film-img');
   const id = e.target.dataset.id;
-  console.log(e.target);
-  console.log(id);
+  // console.log(e.target);
+  // console.log(id);
+  if (!card) {
+    return;
+  }
+  e.preventDefault();
   fetchFilm(id);
 
   refs.backdrop.classList.add('opened');
