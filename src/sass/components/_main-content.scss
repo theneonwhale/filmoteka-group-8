@@ -15,11 +15,11 @@
 
   color: $accent-color;
 
-  @media screen and (max-width: 768px) {
+  @media screen and (min-width: 768px) {
     width: calc((100% - 60px) / 2);
   }
-  @media screen and (max-width: 480px) {
-    width: calc(100% - 30px);
+  @media screen and (min-width: 1024px) {
+    width: calc((100% - 90px) / 3);
     display: flex;
     justify-content: center;
   }
@@ -29,18 +29,39 @@
   border-radius: 5px;
   width: 100%;
 }
-.descr ul {
+.card-bottom {
   display: flex;
+  align-items: flex-end;
 }
+.descr {
+  margin-right: 15px;
+}
+
 .descr .film-name {
   font: 500 12px/1.33 'Roboto', sans-serif;
   text-transform: uppercase;
   color: $primary-black-color;
 }
-.descr ul {
+
+.film-genre,
+.film-year {
   font: 500 12px/1.2 'Roboto', sans-serif;
 }
-.descr .film-genre {
+
+.film-info .film-genre {
   margin-right: 5px;
   position: relative;
+}
+
+div.rating {
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  padding-top: 2px;
+  color: #ffffff;
+  background-color: #ff6b01;
+  width: 36px;
+  height: 16px;
+  line-height: 1.2;
+  border-radius: 5px;
 }

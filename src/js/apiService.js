@@ -8,7 +8,7 @@
 //   }
 
 //   async fetchImages() {
-//     const url = `${BASE_URL}popular/?api_key=${API_KEY}&page_size=18`;
+//     const url = `${BASE_URL}popular/?api_key=${API_KEY}`;
 //     const response = await fetch(url);
 //     const movies = await response.json();
 //     const movie = movies.results;
