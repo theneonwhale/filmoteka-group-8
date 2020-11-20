@@ -1,5 +1,4 @@
 import modalTpl from '../templates/modal.hbs';
-import ImagesApiService from '../js/apiService';
 
 const refs = {
   backdrop: document.querySelector('.js-backdrop'),
@@ -7,24 +6,33 @@ const refs = {
   modalContent: document.querySelector('.backdrop-content'),
 };
 
-window.addEventListener('keydown', onEscBtnClick);
 refs.cardsContainer.addEventListener('click', onCardClick);
 refs.backdrop.addEventListener('click', onBackdropClick);
 
 function onCardClick(e) {
-  e.preventDefault();
-
-  if (e.target.classList.contains('.card-link')) {
-    const id = e.target.dataset.id;
-    fetchFilm(id);
-
-    refs.backdrop.classList.add('opened');
+  const card = e.target.classList.contains('film-img');
+  const id = e.target.dataset.id;
+  // console.log(e.target);
+  // console.log(id);
+  if (!card) {
+    return;
   }
+  e.preventDefault();
+  fetchFilm(id);
+
+  refs.backdrop.classList.add('opened');
+  window.addEventListener('keydown', onEscBtnClick);
 }
-const imagesApiService = new ImagesApiService();
 
 function fetchFilm(id) {
-  imagesApiService.idQuery(id).then(movie => appendMarkup(movie));
+  return fetch(
+    `https://api.themoviedb.org/3/movie/${id}?api_key=726653b8cacb73d155407508fdc35e60&language=en-US`,
+  )
+    .then(response => response.json())
+    .then(movie => {
+      appendMarkup(movie);
+      console.log(movie);
+    });
 }
 
 function appendMarkup(movie) {
@@ -33,6 +41,7 @@ function appendMarkup(movie) {
 
 function closeModal() {
   refs.backdrop.classList.remove('opened');
+  refs.modalContent.innerHTML = '';
 
   window.removeEventListener('keydown', onEscBtnClick);
 }
