@@ -100,6 +100,19 @@ function appendMoviesMarkup(movie) {
 function clearMoviesList() {
   refs.moviesListEl.innerHTML = '';
 }
+
+const options = {
+  // below default value of options
+  totalItems: 10,
+  itemsPerPage: 10,
+  visiblePages: 10,
+  page: 1,
+  centerAlign: true,
+  firstItemClassName: 'tui-first-child',
+  lastItemClassName: 'tui-last-child',
+};
+const pagination = new Pagination(paginationContainer, options);
+
 // fetchDayMovies().then(responce => {
 //   renderResults(responce.results);
 
