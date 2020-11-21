@@ -112,7 +112,7 @@ function appendMoviesMarkup(movie) {
     const tempArr = [];
 
     tempArr.push(movie.genres[0]);
-    tempArr.push(movieObj.genres[1]);
+    tempArr.push(movie.genres[1]);
     tempArr.push('Other');
 
     movie.genres.splice(0, movie.genres.length, ...tempArr);
