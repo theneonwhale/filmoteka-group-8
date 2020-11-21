@@ -31,7 +31,9 @@ function fetchFilm(id) {
     .then(response => response.json())
     .then(movie => {
       appendMarkup(movie);
-      console.log(movie);
+      // console.log(movie);
+      const mov = JSON.stringify(movie);
+      localStorage.setItem('film', mov);
     });
 }
 

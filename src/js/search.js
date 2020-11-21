@@ -65,7 +65,13 @@ function getFilmData(e) {
   // refs.spinner.classList.add('active');
   if (e.target.value) {
     fetchFilm(e.target.value).then(responce => {
-      if (responce.results === 0) {
+      console.log(responce.results);
+      console.log(typeof responce.results);
+      const empty = JSON.stringify(responce.results);
+      console.log(empty);
+
+      if (responce.results.lenght === 0) {
+        console.log(empty);
         refs.errorEl.style.display = 'block';
       } else {
         const myPagination = new Pagination(paginationContainer, {
