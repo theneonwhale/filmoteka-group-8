@@ -6,7 +6,6 @@ const BASE_URL = 'https://api.themoviedb.org/3/';
 const API_KEY = '726653b8cacb73d155407508fdc35e60';
 const genreIdsArr = [];
 fetchGenreIds();
-console.log(genreIdsArr);
 
 const movieListEL = document.querySelector('.js-cards-markup');
 const paginationContainer = document.getElementById('tui-pagination-container');
@@ -17,6 +16,7 @@ const refs = {
   queueBtnEl: document.querySelector('.js-queue'),
   moviesListEl: document.querySelector('.js-cards-markup'),
   paginationContainer: document.getElementById('tui-pagination-container'),
+  ldsCircle: document.querySelector('.lds-circle'),
 };
 
 const WATCHED_ARRAY = JSON.parse(localStorage.getItem('watched-movie-list'));
@@ -86,8 +86,7 @@ function getMovie(id) {
 }
 
 function appendMoviesMarkup(movie) {
-  // refs.ldsCircle.classList.add('lds-circle');
-  console.log(movie);
+  refs.ldsCircle.classList.add('lds-circle');
   movie.release_date = movie.release_date.slice(0, 4);
   movie.genres.forEach(({ name }) => console.log(name));
   if (movie.genres.length === 0) {
@@ -119,7 +118,7 @@ function appendMoviesMarkup(movie) {
   }
 
   refs.moviesListEl.insertAdjacentHTML('afterbegin', movieItemTpl(movie));
-  // refs.ldsCircle.classList.remove('lds-circle');
+  refs.ldsCircle.classList.remove('lds-circle');
 }
 
 function clearMoviesList() {
