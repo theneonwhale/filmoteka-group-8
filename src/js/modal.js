@@ -8,20 +8,23 @@ const refs = {
   queueBtn: document.querySelector('.queue-btn'),
   modal: document.querySelector('.modal'),
 };
+
 const BASE_URL = 'https://api.themoviedb.org/3/';
 const API_KEY = '726653b8cacb73d155407508fdc35e60';
 
 let currentSelectedMovieId = null;
+
 const genreIdsArr = [];
 fetchGenreIds();
-console.log(genreIdsArr);
 
 // localStorage variables
 const WATCHED_MOVIES_STORAGE = 'watched-movie-list';
 const QUEUE_MOVIES_STORAGE = 'queue-movie-list';
+
 refs.cardsContainer.addEventListener('click', onCardClick);
 refs.backdrop.addEventListener('click', onBackdropClick);
 refs.modal.addEventListener('click', onModalBtnsClick);
+
 function onModalBtnsClick(e) {
   if (e.target.classList.contains('watched-btn')) {
     // localStorage.setItem(WATCHED_MOVIE, opendMovieId);
@@ -38,6 +41,7 @@ function onModalBtnsClick(e) {
     addMovieToQueued();
   }
 }
+
 function addMovieToQueued() {
   // remove movie from watched list
   const watchedMovies = new Set(
@@ -58,6 +62,7 @@ function addMovieToQueued() {
     JSON.stringify([...queuedMovies.values()]),
   );
 }
+
 function addMovieToWatched() {
   // remove movie from queued list
   const queuedMovies = new Set(
@@ -78,6 +83,7 @@ function addMovieToWatched() {
     JSON.stringify([...watchedMovies.values()]),
   );
 }
+
 function onCardClick(e) {
   const card = e.target.classList.contains('film-img');
   if (!card) {
@@ -103,16 +109,15 @@ function fetchFilm(id) {
   )
     .then(response => response.json())
     .then(movie => {
-      console.log(movie);
       appendMarkup(movie);
     });
 }
+
 function appendMarkup(movie) {
-  movie.genres.forEach(({ name }) => console.log(name));
   if (movie.genres.length === 0) {
     movie.genres.push({ name: 'No genre' });
   } else if (movie.genres.length <= 3) {
-    movie.genres.forEach(({ id, name }, index) => {
+    movie.genres.forEach(({ id }, index) => {
       const idObj = genreIdsArr.find(genreObj => genreObj.id === id);
 
       movie.genres[index] = `${idObj.name},`;
@@ -122,7 +127,7 @@ function appendMarkup(movie) {
       movie.genres.length - 1
     ].slice(0, movie.genres[movie.genres.length - 1].length - 1);
   } else {
-    movie.genres.forEach(({ id, name }, index) => {
+    movie.genres.forEach(({ id }, index) => {
       const idObj = genreIdsArr.find(genreObj => genreObj.id === id);
 
       movie.genres[index] = `${idObj.name},`;
@@ -138,19 +143,23 @@ function appendMarkup(movie) {
   }
   refs.modalContent.insertAdjacentHTML('beforeend', modalTpl(movie));
 }
+
 function closeModal() {
   refs.backdrop.classList.remove('opened');
   refs.modalContent.innerHTML = '';
   window.removeEventListener('keydown', onEscBtnClick);
 }
+
 function onBackdropClick(e) {
-  if (e.target.classList.contains('backdrop-content')) {
+  console.log('onbacdropclick', e.target.classList);
+  if (!e.target.classList.contains('js-backdrop')) {
     return;
   } else if (e.target.classList.contains('js-btn')) {
     return;
   }
   closeModal();
 }
+
 function onEscBtnClick(e) {
   if (e.code !== 'Escape') {
     return;
