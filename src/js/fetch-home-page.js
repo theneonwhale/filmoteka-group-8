@@ -80,6 +80,6 @@ function renderResults(results) {
       movieObj.genre_ids.splice(0, movieObj.genre_ids.length, ...tempArr);
     }
   });
-
+  console.log(results);
   movieListEL.insertAdjacentHTML('afterbegin', movieItemsTpl(results));
 }

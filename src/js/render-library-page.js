@@ -1,4 +1,4 @@
-import movieItemTpl from '../templates/movie-item-library.hbs';
+import moviesItemTpl from '../templates/movie-item-library.hbs';
 const Pagination = require('tui-pagination');
 import 'tui-pagination/dist/tui-pagination.css';
 
@@ -20,49 +20,12 @@ const refs = {
 const WATCHED_ARRAY = JSON.parse(localStorage.getItem('watched-movie-list'));
 const QUEUE_ARRAY = JSON.parse(localStorage.getItem('queue-movie-list'));
 
-console.log(WATCHED_ARRAY);
-console.log(QUEUE_ARRAY);
+onWatchedBtnClick();
+// console.log(WATCHED_ARRAY);
+// console.log(QUEUE_ARRAY);
 
-// const arrayOfMovies = [
-//   {
-//     original_name: 'Game of Thrones',
-//     id: 1399,
-//     name: 'Game of Thrones',
-//     vote_count: 4772,
-//     vote_average: 8.2,
-//     first_air_date: '2011-04-17',
-//     poster_path: '/gwPSoYUHAKmdyVywgLpKKA4BjRr.jpg',
-//     genre_ids: [18, 10759, 10765],
-//     original_language: 'en',
-//     backdrop_path: '/gX8SYlnL9ZznfZwEH4KJUePBFUM.jpg',
-//     overview:
-//       "Seven noble families fight for control of the mythical land of Westeros. Friction between the houses leads to full-scale war. All while a very ancient evil awakens in the farthest north. Amidst the war, a neglected military order of misfits, the Night's Watch, is all that stands between the realms of men and icy horrors beyond.",
-//     origin_country: ['US'],
-//     popularity: 61.91,
-//   },
-//   {
-//     adult: false,
-//     backdrop_path: '/5a7lMDn3nAj2ByO0X1fg6BhUphR.jpg',
-//     genre_ids: [12, 14, 878],
-//     id: 333339,
-//     original_language: 'en',
-//     original_title: 'Ready Player One',
-//     overview:
-//       'When the creator of a popular video game system dies, a virtual contest is created to compete for his fortune.',
-//     poster_path: '/pU1ULUq8D3iRxl1fdX2lZIzdHuI.jpg',
-//     release_date: '2018-03-28',
-//     title: 'Ready Player One',
-//     video: false,
-//     vote_average: 7.7,
-//     vote_count: 3673,
-//     popularity: 68.153,
-//   },
-// ];
-// localStorage.setItem('watched', JSON.stringify(arrayOfMovies));
-
-refs.watchedBtnEl.classList.add('active');
-
-refs.buttonsBoxEl.addEventListener('click', onBtnClick);
+refs.watchedBtnEl.addEventListener('click', onWatchedBtnClick);
+refs.queueBtnEl.addEventListener('click', onQueueBtnClick);
 
 function onBtnClick(event) {
   event.preventDefault();
@@ -77,22 +40,36 @@ function onBtnClick(event) {
   }
 
   if (event.target.classList.contains('js-watched')) {
-    onWatchedBtnClick();
+    // onWatchedBtnClick();
+    // onQueueBtnClick();
   }
 
   //   console.log(event.target);
 }
 
 function onWatchedBtnClick() {
+  clearMoviesList();
+  refs.watchedBtnEl.classList.add('active');
+  refs.queueBtnEl.classList.remove('active');
   if (WATCHED_ARRAY === null) {
     refs.moviesListEl.innerHTML =
       '<p>There is nothing in the watched list.</p>';
     return;
   }
-  getMovies();
+  WATCHED_ARRAY.forEach(id => getMovie(id));
 }
 
-function onQueueBtnClick() {}
+function onQueueBtnClick() {
+  refs.watchedBtnEl.classList.remove('active');
+  refs.queueBtnEl.classList.add('active');
+  clearMoviesList();
+  if (QUEUE_ARRAY === null) {
+    refs.moviesListEl.innerHTML =
+      '<p>There is nothing in the watched list.</p>';
+    return;
+  }
+  QUEUE_ARRAY.forEach(id => getMovie(id));
+}
 
 // fetch
 
@@ -105,28 +82,24 @@ function onQueueBtnClick() {}
 // https://api.themoviedb.org/3/movie/{movie_id}?api_key=<<api_key>>&language=en-US
 function fetchMovieById(id) {
   console.log(id);
-  return fetch(`${BASE_URL}movie/${id}?api_key=${API_KEY}&language=en-US`)
-    .then(response => response.json())
-    .then(movie => {
-      console.log(movie);
-      return movie;
-    });
+  return fetch(
+    `${BASE_URL}movie/${id}?api_key=${API_KEY}&language=en-US`,
+  ).then(response => response.json());
 }
 
-function getMovies() {
-  const result = WATCHED_ARRAY.map(id => {
-    return fetchMovieById(id);
-  });
-  console.log(result);
-  appendMoviesMarkup(result);
+function getMovie(id) {
+  fetchMovieById(id).then(movie => appendMoviesMarkup(movie));
 }
 
 function appendMoviesMarkup(movie) {
   // refs.ldsCircle.classList.add('lds-circle');
-  refs.moviesListEl.insertAdjacentHTML('afterbegin', movieItemTpl(movie));
+  refs.moviesListEl.insertAdjacentHTML('afterbegin', moviesItemTpl(movie));
   // refs.ldsCircle.classList.remove('lds-circle');
 }
 
+function clearMoviesList() {
+  refs.moviesListEl.innerHTML = '';
+}
 // fetchDayMovies().then(responce => {
 //   renderResults(responce.results);
 
