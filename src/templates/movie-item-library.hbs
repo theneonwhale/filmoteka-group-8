@@ -6,11 +6,13 @@
             <h2 class="film-name">{{original_title}}</h2>
             <div class="film-genre">
                 <ul>
-                    {{#each genre.name}}
+                    {{#each genres}}
                     <li>{{this}}</li>
                     {{/each}}
                 </ul>
                 &#10072; <span class="film-year"> {{release_date}}</span>
+                <span class="vote"> {{vote_average}}</span>
+
             </div>
         </div>
     </div>
