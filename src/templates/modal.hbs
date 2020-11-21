@@ -18,7 +18,11 @@
         </li>
         <li>
             <p class="descr-header">Genre</p>
-            <p>{{genres.name}}</p>
+            <ul>
+                {{#each genres}}
+                <li>{{this}}</li>
+                {{/each}}
+            </ul>
         </li>
 
     </ul>
