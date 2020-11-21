@@ -75,12 +75,31 @@ function onBtnClick(event) {
   }
 
   if (event.target.classList.contains('watched-btn')) {
-    watchedFilmsIdArr.push(id);
-    console.log(watchedFilmsIdArr);
-    localStorage.setItem('watched', JSON.stringify(watchedFilmsIdArr));
+    if (watchedFilmsIdArr.includes(id)) {
+      return;
+    } else if (queuedFilmsIdArr.includes(id)) {
+      const indexOfFilmId = queuedFilmsIdArr.indexOf(id);
+      queuedFilmsIdArr.splice(indexOfFilmId, 1);
+      watchedFilmsIdArr.push(id);
+      localStorage.setItem('watched', JSON.stringify(watchedFilmsIdArr));
+      return;
+    } else {
+      watchedFilmsIdArr.push(id);
+      localStorage.setItem('watched', JSON.stringify(watchedFilmsIdArr));
+    }
   } else if (event.target.classList.contains('queue-btn')) {
-    queuedFilmsIdArr.push(id);
-    localStorage.setItem('queued', JSON.stringify(watchedFilmsIdArr));
+    if (queuedFilmsIdArr.includes(id)) {
+      return;
+    } else if (watchedFilmsIdArr.includes(id)) {
+      const indexOfFilmId = watchedFilmsIdArr.indexOf(id);
+      watchedFilmsIdArr.splice(indexOfFilmId, 1);
+      queuedFilmsIdArr.push(id);
+      localStorage.setItem('queued', JSON.stringify(queuedFilmsIdArr));
+      return;
+    } else {
+      queuedFilmsIdArr.push(id);
+      localStorage.setItem('queued', JSON.stringify(queuedFilmsIdArr));
+    }
   }
   console.log(localStorage);
 }
