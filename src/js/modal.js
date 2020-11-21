@@ -18,10 +18,22 @@ refs.backdrop.addEventListener('click', onBackdropClick);
 refs.modal.addEventListener('click', onModalBtnsClick);
 function onModalBtnsClick(e) {
   if (e.target.classList.contains('watched-btn')) {
+
+    localStorage.setItem(WATCHED_MOVIE, opendMovieId);
+    e.target.classList.add('clicked');
+    e.target.textContent = 'remove from watched';
+
     addMovieToWatched();
+
   }
   if (e.target.classList.contains('queue-btn')) {
+
+    localStorage.setItem(QUEUE_MOVIE, opendMovieId);
+    e.target.classList.add('clicked');
+    e.target.textContent = 'remove from queue';
+
     addMovieToQueued();
+
   }
 }
 function addMovieToQueued() {
