@@ -2,7 +2,7 @@
     <img src="https://image.tmdb.org/t/p/w300{{poster_path}}" alt="{{title}}">
 </li>
 <li class="content-descr">
-    <h2>{{title}}</h2>
+    <h2 data-id="{{id}}">{{title}}</h2>
     <ul class="descr-list">
         <li>
             <p class="descr-header"> Vote / Votes</p>
@@ -26,6 +26,6 @@
     <p class="overview">{{overview}}</p>
     <ul class="btn-list">
         <li><button class="js-btn watched-btn">add to Watched</button></li>
-        <li><button class="js-btn queue-btn">add to queue</button></li>
+        <li><button class=" js-btn queue-btn">add to queue</button></li>
     </ul>
 </li>
