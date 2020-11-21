@@ -1,11 +1,12 @@
-import moviesItemTpl from '../templates/movie-item-library.hbs';
+import movieItemTpl from '../templates/movie-item-library.hbs';
 const Pagination = require('tui-pagination');
 import 'tui-pagination/dist/tui-pagination.css';
 
 const BASE_URL = 'https://api.themoviedb.org/3/';
 const API_KEY = '726653b8cacb73d155407508fdc35e60';
 const genreIdsArr = [];
-// fetchGenreIds();
+fetchGenreIds();
+console.log(genreIdsArr);
 
 const movieListEL = document.querySelector('.js-cards-markup');
 const paginationContainer = document.getElementById('tui-pagination-container');
@@ -15,6 +16,7 @@ const refs = {
   watchedBtnEl: document.querySelector('.js-watched'),
   queueBtnEl: document.querySelector('.js-queue'),
   moviesListEl: document.querySelector('.js-cards-markup'),
+  paginationContainer: document.getElementById('tui-pagination-container'),
 };
 
 const WATCHED_ARRAY = JSON.parse(localStorage.getItem('watched-movie-list'));
@@ -27,26 +29,6 @@ onWatchedBtnClick();
 refs.watchedBtnEl.addEventListener('click', onWatchedBtnClick);
 refs.queueBtnEl.addEventListener('click', onQueueBtnClick);
 
-function onBtnClick(event) {
-  event.preventDefault();
-
-  if (event.target.nodeName !== 'BUTTON') {
-    return;
-  }
-
-  if (!event.target.classList.contains('active')) {
-    refs.buttonsBoxEl.querySelector('.active').classList.remove('active');
-    event.target.classList.add('active');
-  }
-
-  if (event.target.classList.contains('js-watched')) {
-    // onWatchedBtnClick();
-    // onQueueBtnClick();
-  }
-
-  //   console.log(event.target);
-}
-
 function onWatchedBtnClick() {
   clearMoviesList();
   refs.watchedBtnEl.classList.add('active');
@@ -57,6 +39,18 @@ function onWatchedBtnClick() {
     return;
   }
   WATCHED_ARRAY.forEach(id => getMovie(id));
+
+  // const myPagination = new Pagination(paginationContainer, {
+  //   totalItems: WATCHED_ARRAY.length,
+  //   itemsPerPage: 3,
+  //   visiblePages: 4,
+  //   page: 1,
+  //   centerAlign: true,
+  // });
+
+  // myPagination.on('afterMove', function (eventData) {
+  //   WATCHED_ARRAY.forEach(id => getMovie(id));
+  // });
 }
 
 function onQueueBtnClick() {
@@ -73,15 +67,15 @@ function onQueueBtnClick() {
 
 // fetch
 
-// function fetchGenreIds() {
-//   fetch(`${BASE_URL}genre/movie/list?api_key=${API_KEY}`)
-//     .then(responce => responce.json())
-//     .then(responce => genreIdsArr.splice(0, 0, ...responce.genres));
-// }
+function fetchGenreIds() {
+  fetch(`${BASE_URL}genre/movie/list?api_key=${API_KEY}`)
+    .then(responce => responce.json())
+    .then(responce => genreIdsArr.splice(0, 0, ...responce.genres));
+}
 
 // https://api.themoviedb.org/3/movie/{movie_id}?api_key=<<api_key>>&language=en-US
-function fetchMovieById(id) {
-  console.log(id);
+function fetchMovieById(id, page) {
+  // console.log(id);
   return fetch(
     `${BASE_URL}movie/${id}?api_key=${API_KEY}&language=en-US`,
   ).then(response => response.json());
@@ -93,7 +87,38 @@ function getMovie(id) {
 
 function appendMoviesMarkup(movie) {
   // refs.ldsCircle.classList.add('lds-circle');
-  refs.moviesListEl.insertAdjacentHTML('afterbegin', moviesItemTpl(movie));
+  console.log(movie);
+  movie.release_date = movie.release_date.slice(0, 4);
+  movie.genres.forEach(({ name }) => console.log(name));
+  if (movie.genres.length === 0) {
+    movie.genres.push({ name: 'No genre' });
+  } else if (movie.genres.length <= 3) {
+    movie.genres.forEach(({ id, name }, index) => {
+      const idObj = genreIdsArr.find(genreObj => genreObj.id === id);
+
+      movie.genres[index] = `${idObj.name},`;
+    });
+
+    movie.genres[movie.genres.length - 1] = movie.genres[
+      movie.genres.length - 1
+    ].slice(0, movie.genres[movie.genres.length - 1].length - 1);
+  } else {
+    movie.genres.forEach(({ id, name }, index) => {
+      const idObj = genreIdsArr.find(genreObj => genreObj.id === id);
+
+      movie.genres[index] = `${idObj.name},`;
+    });
+
+    const tempArr = [];
+
+    tempArr.push(movie.genres[0]);
+    tempArr.push(movieObj.genres[1]);
+    tempArr.push('Other');
+
+    movie.genres.splice(0, movie.genres.length, ...tempArr);
+  }
+
+  refs.moviesListEl.insertAdjacentHTML('afterbegin', movieItemTpl(movie));
   // refs.ldsCircle.classList.remove('lds-circle');
 }
 
