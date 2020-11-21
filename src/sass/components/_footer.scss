@@ -1,0 +1,35 @@
+footer {
+  padding: 30px 0;
+  background: #f7f7f7;
+  //   background: $bg-footer-color;
+}
+footer .container {
+  display: flex;
+}
+.footer-content,
+footer .developers {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+  margin-right: auto;
+  color: #545454;
+  //   color: $footer-text-color;
+}
+.heart-img {
+  margin: 0 10px;
+}
+.dev-link {
+  color: #545454;
+  //   color: $footer-text-color;
+}
+.dev-link span {
+  text-decoration: underline;
+}
+.copyright {
+  margin-right: 5px;
+}
+@media screen and (max-width: 480px) {
+  .footer-content {
+    flex-direction: column;
+  }
+}

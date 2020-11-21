@@ -1,0 +1,131 @@
+// main {
+//   position: relative;
+// }
+.modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: $primary-white-color;
+  padding: 5%;
+  width: 75%;
+
+  & img {
+    width: 100%;
+  }
+}
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.2);
+  pointer-events: none;
+  opacity: 0;
+  overflow-y: scroll;
+}
+.backdrop.opened {
+  opacity: 1;
+  pointer-events: initial;
+}
+.backdrop-content {
+  @media screen and (min-width: 600px) {
+    display: flex;
+    align-items: center;
+
+    & > li {
+      width: 50%;
+    }
+  }
+
+  & > li {
+    width: 100%;
+  }
+
+  & .content-img {
+    margin-right: 30px;
+  }
+}
+.backdrop-content .content-descr {
+  margin-bottom: 20px;
+}
+.content-descr {
+  & h2 {
+    margin-bottom: 20px;
+    font: 500 30px/1.17 'Roboto', sans-serif;
+    text-transform: uppercase;
+  }
+
+  & ul > li {
+    display: flex;
+    margin-bottom: 10px;
+    font: 500 12px/1.33 'Roboto', sans-serif;
+  }
+  & h3 {
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    font: 500 12px/1.33 'Roboto', sans-serif;
+  }
+  & p {
+    font: 500 12px/1.66 'Roboto', sans-serif;
+  }
+  & .overview {
+    margin-bottom: 20px;
+  }
+}
+.descr-list > li p {
+  width: 50%;
+}
+.descr-header {
+  font: 500 12px/1.33 'Roboto', sans-serif;
+  color: $card-info-text-color;
+  // width: 50%;
+}
+.vote {
+  padding: 1px 10px;
+  background: $accent-color;
+  color: $primary-white-color;
+  border-radius: 5px;
+}
+.btn-list {
+  display: flex;
+
+  & li {
+    width: 50%;
+  }
+
+  & li:not(:last-child) {
+    margin-right: 15px;
+  }
+}
+.backdrop button {
+  padding: 14px 20px;
+  border: 1px solid $primary-black-color;
+  box-sizing: border-box;
+  border-radius: 5px;
+  font: 500 12px/1.33 'Roboto', sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  text-transform: uppercase;
+  background: $primary-white-color;
+  transition: all 250ms linear;
+  // min-width: 142px;
+
+  &:hover {
+    background: $btn-active-color;
+    color: $primary-white-color;
+    border: none;
+  }
+  &.clicked {
+    background: $btn-active-color;
+    color: $primary-white-color;
+    border: none;
+  }
+
+  @media screen and (min-width: 1024px) {
+    min-width: 142px;
+  }
+}
