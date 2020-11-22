@@ -10,6 +10,12 @@
   padding: 5%;
   width: 75%;
 
+  @media screen and (max-width: 599px) {
+    top: 0%;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
   & img {
     width: 100%;
   }
@@ -81,6 +87,13 @@
   font: 500 12px/1.33 'Roboto', sans-serif;
   color: $card-info-text-color;
   // width: 50%;
+}
+.genre-list {
+  display: flex;
+  flex-wrap: wrap;
+}
+.genre-list li:not(:last-child) {
+  margin-right: 4px;
 }
 .vote {
   padding: 1px 10px;
