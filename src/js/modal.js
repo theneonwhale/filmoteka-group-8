@@ -25,19 +25,11 @@ refs.cardsContainer.addEventListener('click', onCardClick);
 refs.backdrop.addEventListener('click', onBackdropClick);
 refs.modal.addEventListener('click', onModalBtnsClick);
 
-// function checkIfFilmAlreadyAdded() {
-//   const watchedMovies = new Set(
-//     JSON.parse(localStorage.getItem(WATCHED_MOVIES_STORAGE)),
-//   );
-//   if (watchedMovies.has(currentSelectedMovieId)) {
-//     console.log(refs.watchedBtn);
-//   }
-// }
-
 function onModalBtnsClick(e) {
   if (e.target.classList.contains('watched-btn')) {
     e.target.classList.remove('watched-btn');
     addMovieToWatched();
+
     setTimeout(() => {
       e.target.classList.add('remove-from-watched');
     }, 0);
@@ -49,6 +41,7 @@ function onModalBtnsClick(e) {
     e.target.classList.remove('remove-from-watched');
     e.target.classList.add('watched-btn');
     deleteMovieFromWatched();
+
     setTimeout(() => {
       e.target.classList.add('watched-btn');
       e.target.classList.remove('clicked');
@@ -58,6 +51,7 @@ function onModalBtnsClick(e) {
   if (e.target.classList.contains('queue-btn')) {
     e.target.classList.remove('queue-btn');
     addMovieToQueued();
+
     setTimeout(() => {
       e.target.classList.add('remove-from-queue');
     }, 0);
@@ -68,6 +62,7 @@ function onModalBtnsClick(e) {
     e.target.textContent = 'remove from queued';
     e.target.classList.remove('remove-from-queue');
     deleteMovieFromQueued();
+
     setTimeout(() => {
       e.target.classList.add('queue-btn');
       e.target.classList.remove('clicked');
@@ -149,6 +144,7 @@ function onCardClick(e) {
   e.preventDefault();
   fetchFilm(id);
   refs.backdrop.classList.add('opened');
+
   // checkIfFilmAlreadyAdded();
   window.addEventListener('keydown', onEscBtnClick);
 }
@@ -198,12 +194,14 @@ function appendMarkup(movie) {
     movie.genres.splice(0, movie.genres.length, ...tempArr);
   }
   refs.modalContent.insertAdjacentHTML('beforeend', modalTpl(movie));
+  hardModalButtons();
 }
 
 function closeModal() {
   refs.backdrop.classList.remove('opened');
   refs.modalContent.innerHTML = '';
   window.removeEventListener('keydown', onEscBtnClick);
+  location.reload();
 }
 
 function onBackdropClick(e) {
@@ -221,4 +219,26 @@ function onEscBtnClick(e) {
     return;
   }
   closeModal();
+}
+let watched = null;
+let queue = null;
+function hardModalButtons() {
+  watched = document.querySelector('.watched-btn');
+  queue = document.querySelector('.queue-btn');
+  console.log(watched);
+
+  const watchedArr = [
+    ...JSON.parse(localStorage.getItem(WATCHED_MOVIES_STORAGE)),
+  ];
+  const queueArr = [...JSON.parse(localStorage.getItem(QUEUE_MOVIES_STORAGE))];
+
+  if (watchedArr && watchedArr.includes(watched.dataset.id)) {
+    watched.textContent = 'remove from watched';
+    watched.classList.add('clicked');
+  }
+
+  if (queueArr && queueArr.includes(queue.dataset.id)) {
+    queue.textContent = 'remove from queue';
+    queue.classList.add('clicked');
+  }
 }
