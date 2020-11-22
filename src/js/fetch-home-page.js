@@ -1,20 +1,15 @@
 import movieItemsTpl from '../templates/movie.hbs';
 const Pagination = require('tui-pagination');
 import 'tui-pagination/dist/tui-pagination.css';
+import getRefs from './get-refs';
 
 const BASE_URL = 'https://api.themoviedb.org/3/';
 const API_KEY = '726653b8cacb73d155407508fdc35e60';
+
+const refs = getRefs();
+
 const genreIdsArr = [];
 fetchGenreIds();
-
-// https://api.themoviedb.org/3/search/movie?api_key=726653b8cacb73d155407508fdc35e60&query=vav&page=1&include_adult=false
-// https://api.themoviedb.org/3/movie/{movie_id}?api_key=726653b8cacb73d155407508fdc35e60&language=en-US
-// https://api.themoviedb.org/3/genre/movie/list?api_key=726653b8cacb73d155407508fdc35e60&language=en-US
-// https://api.themoviedb.org/3/movie/popular/?api_key=726653b8cacb73d155407508fdc35e60
-// https://api.themoviedb.org/3/?api_key=726653b8cacb73d155407508fdc35e60
-
-const movieListEL = document.querySelector('.js-cards-markup');
-const paginationContainer = document.getElementById('tui-pagination-container');
 
 function fetchGenreIds() {
   fetch(`${BASE_URL}genre/movie/list?api_key=${API_KEY}`)
@@ -31,7 +26,7 @@ function fetchDayMovies(page = 1) {
 fetchDayMovies().then(responce => {
   renderResults(responce.results);
 
-  const myPagination = new Pagination(paginationContainer, {
+  const myPagination = new Pagination(refs.paginationContainer, {
     totalItems: responce.total_results,
     itemsPerPage: 20,
     visiblePages: 4,
@@ -40,17 +35,16 @@ fetchDayMovies().then(responce => {
   });
 
   myPagination.on('afterMove', function (eventData) {
-    fetchDayMovies(eventData.page)
-      .then(responce => {
-        renderResults(responce.results);
-      })
-      .catch(console.log);
+    fetchDayMovies(eventData.page).then(responce => {
+      renderResults(responce.results);
+    });
+
     scrollToTop();
   });
 });
 
 function renderResults(results) {
-  movieListEL.innerHTML = '';
+  refs.movieListEL.innerHTML = '';
 
   results.forEach(movieObj => {
     if (movieObj.release_date) {
@@ -85,7 +79,8 @@ function renderResults(results) {
       movieObj.genre_ids.splice(0, movieObj.genre_ids.length, ...tempArr);
     }
   });
-  movieListEL.insertAdjacentHTML('afterbegin', movieItemsTpl(results));
+
+  refs.movieListEL.insertAdjacentHTML('afterbegin', movieItemsTpl(results));
 }
 
 function scrollToTop() {
