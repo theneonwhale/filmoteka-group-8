@@ -112,7 +112,7 @@ function clearMoviesList() {
 function renderLibraryResults(renderArray, page = 1) {
   clearMoviesList();
 
-  const moviesPerPage = 3;
+  const moviesPerPage = 6;
 
   renderArray.forEach((id, index) => {
     if (
