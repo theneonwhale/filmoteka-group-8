@@ -1,15 +1,11 @@
 import debounce from 'lodash.debounce';
 import movieItemsTpl from '../templates/movie.hbs';
-
-const refs = {
-  container: document.querySelector('.js-cards-markup'),
-  errorEl: document.querySelector('.error-text'),
-  inputField: document.querySelector('.search-form input'),
-  spinner: document.querySelector('.spinner'),
-};
+import getRefs from './get-refs';
 
 const BASE_URL = 'https://api.themoviedb.org/3/';
 const API_KEY = '726653b8cacb73d155407508fdc35e60';
+
+const refs = getRefs();
 
 const Pagination = require('tui-pagination');
 import 'tui-pagination/dist/tui-pagination.css';
@@ -34,7 +30,6 @@ function fetchFilm(search, page = 1) {
 refs.inputField.addEventListener('input', debounce(getFilmData, 500));
 
 function getFilmData(e) {
-  // refs.spinner.classList.add('active');
   if (e.target.value) {
     fetchFilm(e.target.value).then(response => {
       if (!response.results.length) {
@@ -51,16 +46,17 @@ function getFilmData(e) {
           let currentPage = eventData.page;
 
           fetchFilm(e.target.value, currentPage).then(response => {
-            console.log(response.results);
-
             const cardMarkup = movieItemsTpl(response.results);
-            refs.container.insertAdjacentHTML('afterbegin', cardMarkup);
+
+            refs.movieListEL.insertAdjacentHTML('afterbegin', cardMarkup);
           });
+
           scrollToTop();
         });
 
         refs.errorEl.style.display = 'none';
-        refs.container.innerHTML = '';
+
+        refs.movieListEL.innerHTML = '';
 
         response.results.forEach(movieObj => {
           movieObj.release_date = movieObj.release_date.slice(0, 4);
@@ -101,8 +97,8 @@ function getFilmData(e) {
         });
 
         const cardMarkup = movieItemsTpl(response.results);
-        refs.container.insertAdjacentHTML('afterbegin', cardMarkup);
-        // refs.spinner.classList.remove('active');
+
+        refs.movieListEL.insertAdjacentHTML('afterbegin', cardMarkup);
       }
     });
   } else if (e.target.value === '') {

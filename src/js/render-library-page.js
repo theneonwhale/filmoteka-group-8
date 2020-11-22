@@ -1,20 +1,16 @@
-import movieItemTpl from '../templates/movie-item-library.hbs';
+import movieItemTpl from '../templates/movie-library.hbs';
+import getRefs from './get-refs';
+
 const Pagination = require('tui-pagination');
 import 'tui-pagination/dist/tui-pagination.css';
 
 const BASE_URL = 'https://api.themoviedb.org/3/';
 const API_KEY = '726653b8cacb73d155407508fdc35e60';
+
+const refs = getRefs();
+
 const genreIdsArr = [];
 fetchGenreIds();
-
-const refs = {
-  buttonsBoxEl: document.querySelector('.buttons-wrapper'),
-  watchedBtnEl: document.querySelector('.js-watched'),
-  queueBtnEl: document.querySelector('.js-queue'),
-  moviesListEl: document.querySelector('.js-cards-markup'),
-  paginationContainer: document.getElementById('tui-pagination-container'),
-  ldsCircle: document.querySelector('.lds-circle'),
-};
 
 const WATCHED_ARRAY = JSON.parse(localStorage.getItem('watched-movie-list'));
 const QUEUE_ARRAY = JSON.parse(localStorage.getItem('queue-movie-list'));
@@ -26,12 +22,16 @@ refs.queueBtnEl.addEventListener('click', onQueueBtnClick);
 
 function onWatchedBtnClick() {
   clearMoviesList();
+
   refs.watchedBtnEl.classList.add('active');
+
   refs.queueBtnEl.classList.remove('active');
+
   if (WATCHED_ARRAY === null || WATCHED_ARRAY.length === 0) {
-    refs.moviesListEl.innerHTML =
-      '<p>There is nothing in the watched list.</p>';
+    refs.movieListEl.innerHTML = '<p>There is nothing in the watched list.</p>';
+
     refs.paginationContainer.innerHTML = '';
+
     return;
   }
 
@@ -40,11 +40,16 @@ function onWatchedBtnClick() {
 
 function onQueueBtnClick() {
   refs.watchedBtnEl.classList.remove('active');
+
   refs.queueBtnEl.classList.add('active');
+
   clearMoviesList();
+
   if (QUEUE_ARRAY === null || QUEUE_ARRAY.length === 0) {
-    refs.moviesListEl.innerHTML = '<p>There is nothing in the queue list.</p>';
+    refs.movieListEl.innerHTML = '<p>There is nothing in the queue list.</p>';
+
     refs.paginationContainer.innerHTML = '';
+
     return;
   }
 
@@ -52,14 +57,12 @@ function onQueueBtnClick() {
 }
 
 // fetch
-
 function fetchGenreIds() {
   fetch(`${BASE_URL}genre/movie/list?api_key=${API_KEY}`)
     .then(responce => responce.json())
     .then(responce => genreIdsArr.splice(0, 0, ...responce.genres));
 }
 
-// https://api.themoviedb.org/3/movie/{movie_id}?api_key=<<api_key>>&language=en-US
 function fetchMovieById(id) {
   return fetch(
     `${BASE_URL}movie/${id}?api_key=${API_KEY}&language=en-US`,
@@ -71,8 +74,6 @@ function getMovie(id) {
 }
 
 function appendMoviesMarkup(movie) {
-  // refs.ldsCircle.classList.add('lds-circle');
-
   if (movie.release_date) {
     movie.release_date = movie.release_date.slice(0, 4);
   }
@@ -105,12 +106,11 @@ function appendMoviesMarkup(movie) {
     movie.genres.splice(0, movie.genres.length, ...tempArr);
   }
 
-  refs.moviesListEl.insertAdjacentHTML('afterbegin', movieItemTpl(movie));
-  // refs.ldsCircle.classList.remove('lds-circle');
+  refs.movieListEL.insertAdjacentHTML('afterbegin', movieItemTpl(movie));
 }
 
 function clearMoviesList() {
-  refs.moviesListEl.innerHTML = '';
+  refs.movieListEL.innerHTML = '';
 }
 
 function renderLibraryResults(renderArray, page = 1) {
@@ -149,38 +149,3 @@ function scrollToTop() {
     behavior: 'smooth',
   });
 }
-
-// refs.watchedBtnEl.classList.add('active');
-
-// refs.buttonsBoxEl.addEventListener('click', onBtnClick);
-
-// function onBtnClick(event) {
-//   event.preventDefault();
-
-//   if (event.target.nodeName !== 'BUTTON') {
-//     return;
-//   }
-
-//   if (!event.target.classList.contains('active')) {
-//     refs.buttonsBoxEl.querySelector('.active').classList.remove('active');
-//     event.target.classList.add('active');
-//   }
-
-//   if (event.target.classList.contains('js-watched')) {
-//     onWatchedBtnClick();
-//   }
-
-//   console.log(event.target);
-// }
-
-// function onWatchedBtnClick() {
-//   const watchedMoviesStr = localStorage.getItem('watched');
-
-//   if (watchedMovies) {
-//     const watchedMoviesArr = JSON.parse(watchedMoviesStr);
-//   }
-
-//   refs.moviesListEl.innerHTML = '<p>There is nothing in the watched list.</p>';
-// }
-
-// function onQueueBtnClick() {}
