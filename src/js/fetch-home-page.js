@@ -7,6 +7,7 @@ const API_KEY = '726653b8cacb73d155407508fdc35e60';
 const genreIdsArr = [];
 fetchGenreIds();
 
+// https://api.themoviedb.org/3/search/movie?api_key=726653b8cacb73d155407508fdc35e60&query=vav&page=1&include_adult=false
 // https://api.themoviedb.org/3/movie/{movie_id}?api_key=726653b8cacb73d155407508fdc35e60&language=en-US
 // https://api.themoviedb.org/3/genre/movie/list?api_key=726653b8cacb73d155407508fdc35e60&language=en-US
 // https://api.themoviedb.org/3/movie/popular/?api_key=726653b8cacb73d155407508fdc35e60
@@ -31,10 +32,11 @@ fetchDayMovies().then(responce => {
   renderResults(responce.results);
 
   const myPagination = new Pagination(paginationContainer, {
-    totalItems: responce.total_pages,
+    totalItems: responce.total_results,
     itemsPerPage: 20,
     visiblePages: 4,
     centerAlign: true,
+    usageStatistics: false,
   });
 
   myPagination.on('afterMove', function (eventData) {
@@ -51,7 +53,9 @@ function renderResults(results) {
   movieListEL.innerHTML = '';
 
   results.forEach(movieObj => {
-    movieObj.release_date = movieObj.release_date.slice(0, 4);
+    if (movieObj.release_date) {
+      movieObj.release_date = movieObj.release_date.slice(0, 4);
+    }
 
     if (movieObj.genre_ids.length === 0) {
       movieObj.genre_ids.push('No genre');
@@ -81,7 +85,6 @@ function renderResults(results) {
       movieObj.genre_ids.splice(0, movieObj.genre_ids.length, ...tempArr);
     }
   });
-  console.log(results);
   movieListEL.insertAdjacentHTML('afterbegin', movieItemsTpl(results));
 }
 
