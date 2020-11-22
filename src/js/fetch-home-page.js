@@ -43,6 +43,7 @@ fetchDayMovies().then(responce => {
         renderResults(responce.results);
       })
       .catch(console.log);
+    scrollToTop();
   });
 });
 
@@ -82,4 +83,11 @@ function renderResults(results) {
   });
   console.log(results);
   movieListEL.insertAdjacentHTML('afterbegin', movieItemsTpl(results));
+}
+
+function scrollToTop() {
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth',
+  });
 }
