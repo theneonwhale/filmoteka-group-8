@@ -72,7 +72,11 @@ function getMovie(id) {
 
 function appendMoviesMarkup(movie) {
   // refs.ldsCircle.classList.add('lds-circle');
-  movie.release_date = movie.release_date.slice(0, 4);
+
+  if (movie.release_date) {
+    movie.release_date = movie.release_date.slice(0, 4);
+  }
+
   if (movie.genres.length === 0) {
     movie.genres.push({ name: 'No genre' });
   } else if (movie.genres.length <= 3) {
