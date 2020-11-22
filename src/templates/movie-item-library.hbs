@@ -1,0 +1,20 @@
+<li>
+    <div class="card-link" data-id="{{id}}">
+        <img src="https://image.tmdb.org/t/p/w300{{poster_path}}" alt="{{title}}" width="280" data-id="{{id}}"
+            class="film-img">
+        <div class="descr">
+            <h2 class="film-name">{{original_title}}</h2>
+            <div class="film-genre">
+                <ul>
+                    {{#each genres}}
+                    <li>{{this}}</li>
+                    {{/each}}
+                </ul>
+                &#10072; <span class="film-year"> {{release_date}}</span>
+                <span class="vote"> {{vote_average}}</span>
+
+            </div>
+        </div>
+
+    </div>
+</li>

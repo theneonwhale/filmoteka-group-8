@@ -1,78 +1,182 @@
+import movieItemTpl from '../templates/movie-item-library.hbs';
+const Pagination = require('tui-pagination');
+import 'tui-pagination/dist/tui-pagination.css';
+
+const BASE_URL = 'https://api.themoviedb.org/3/';
+const API_KEY = '726653b8cacb73d155407508fdc35e60';
+const genreIdsArr = [];
+fetchGenreIds();
+
 const refs = {
   buttonsBoxEl: document.querySelector('.buttons-wrapper'),
   watchedBtnEl: document.querySelector('.js-watched'),
   queueBtnEl: document.querySelector('.js-queue'),
   moviesListEl: document.querySelector('.js-cards-markup'),
+  paginationContainer: document.getElementById('tui-pagination-container'),
+  ldsCircle: document.querySelector('.lds-circle'),
 };
 
-const arrayOfMovies = [
-  {
-    original_name: 'Game of Thrones',
-    id: 1399,
-    name: 'Game of Thrones',
-    vote_count: 4772,
-    vote_average: 8.2,
-    first_air_date: '2011-04-17',
-    poster_path: '/gwPSoYUHAKmdyVywgLpKKA4BjRr.jpg',
-    genre_ids: [18, 10759, 10765],
-    original_language: 'en',
-    backdrop_path: '/gX8SYlnL9ZznfZwEH4KJUePBFUM.jpg',
-    overview:
-      "Seven noble families fight for control of the mythical land of Westeros. Friction between the houses leads to full-scale war. All while a very ancient evil awakens in the farthest north. Amidst the war, a neglected military order of misfits, the Night's Watch, is all that stands between the realms of men and icy horrors beyond.",
-    origin_country: ['US'],
-    popularity: 61.91,
-  },
-  {
-    adult: false,
-    backdrop_path: '/5a7lMDn3nAj2ByO0X1fg6BhUphR.jpg',
-    genre_ids: [12, 14, 878],
-    id: 333339,
-    original_language: 'en',
-    original_title: 'Ready Player One',
-    overview:
-      'When the creator of a popular video game system dies, a virtual contest is created to compete for his fortune.',
-    poster_path: '/pU1ULUq8D3iRxl1fdX2lZIzdHuI.jpg',
-    release_date: '2018-03-28',
-    title: 'Ready Player One',
-    video: false,
-    vote_average: 7.7,
-    vote_count: 3673,
-    popularity: 68.153,
-  },
-];
-localStorage.setItem('watched', JSON.stringify(arrayOfMovies));
+const WATCHED_ARRAY = JSON.parse(localStorage.getItem('watched-movie-list'));
+const QUEUE_ARRAY = JSON.parse(localStorage.getItem('queue-movie-list'));
 
-refs.watchedBtnEl.classList.add('active');
+onWatchedBtnClick();
 
-refs.buttonsBoxEl.addEventListener('click', onBtnClick);
+refs.watchedBtnEl.addEventListener('click', onWatchedBtnClick);
+refs.queueBtnEl.addEventListener('click', onQueueBtnClick);
 
-function onBtnClick(event) {
-  event.preventDefault();
-
-  if (event.target.nodeName !== 'BUTTON') {
+function onWatchedBtnClick() {
+  clearMoviesList();
+  refs.watchedBtnEl.classList.add('active');
+  refs.queueBtnEl.classList.remove('active');
+  if (WATCHED_ARRAY === null || WATCHED_ARRAY.length === 0) {
+    refs.moviesListEl.innerHTML =
+      '<p>There is nothing in the watched list.</p>';
+    refs.paginationContainer.innerHTML = '';
     return;
   }
 
-  if (!event.target.classList.contains('active')) {
-    refs.buttonsBoxEl.querySelector('.active').classList.remove('active');
-    event.target.classList.add('active');
-  }
-
-  if (event.target.classList.contains('js-watched')) {
-    onWatchedBtnClick();
-  }
-
-  //   console.log(event.target);
+  renderLibraryResults(WATCHED_ARRAY);
 }
 
-function onWatchedBtnClick() {
-  const watchedMoviesStr = localStorage.getItem('watched');
-
-  if (watchedMovies) {
-    const watchedMoviesArr = JSON.parse(watchedMoviesStr);
+function onQueueBtnClick() {
+  refs.watchedBtnEl.classList.remove('active');
+  refs.queueBtnEl.classList.add('active');
+  clearMoviesList();
+  if (QUEUE_ARRAY === null || QUEUE_ARRAY.length === 0) {
+    refs.moviesListEl.innerHTML = '<p>There is nothing in the queue list.</p>';
+    refs.paginationContainer.innerHTML = '';
+    return;
   }
 
-  refs.moviesListEl.innerHTML = '<p>There is nothing in the watched list.</p>';
+  renderLibraryResults(QUEUE_ARRAY);
 }
 
-function onQueueBtnClick() {}
+// fetch
+
+function fetchGenreIds() {
+  fetch(`${BASE_URL}genre/movie/list?api_key=${API_KEY}`)
+    .then(responce => responce.json())
+    .then(responce => genreIdsArr.splice(0, 0, ...responce.genres));
+}
+
+// https://api.themoviedb.org/3/movie/{movie_id}?api_key=<<api_key>>&language=en-US
+function fetchMovieById(id) {
+  return fetch(
+    `${BASE_URL}movie/${id}?api_key=${API_KEY}&language=en-US`,
+  ).then(response => response.json());
+}
+
+function getMovie(id) {
+  fetchMovieById(id).then(movie => appendMoviesMarkup(movie));
+}
+
+function appendMoviesMarkup(movie) {
+  // refs.ldsCircle.classList.add('lds-circle');
+  movie.release_date = movie.release_date.slice(0, 4);
+  if (movie.genres.length === 0) {
+    movie.genres.push({ name: 'No genre' });
+  } else if (movie.genres.length <= 3) {
+    movie.genres.forEach(({ id }, index) => {
+      const idObj = genreIdsArr.find(genreObj => genreObj.id === id);
+
+      movie.genres[index] = `${idObj.name},`;
+    });
+
+    movie.genres[movie.genres.length - 1] = movie.genres[
+      movie.genres.length - 1
+    ].slice(0, movie.genres[movie.genres.length - 1].length - 1);
+  } else {
+    movie.genres.forEach(({ id }, index) => {
+      const idObj = genreIdsArr.find(genreObj => genreObj.id === id);
+
+      movie.genres[index] = `${idObj.name},`;
+    });
+
+    const tempArr = [];
+
+    tempArr.push(movie.genres[0]);
+    tempArr.push(movie.genres[1]);
+    tempArr.push('Other');
+
+    movie.genres.splice(0, movie.genres.length, ...tempArr);
+  }
+
+  refs.moviesListEl.insertAdjacentHTML('afterbegin', movieItemTpl(movie));
+  // refs.ldsCircle.classList.remove('lds-circle');
+}
+
+function clearMoviesList() {
+  refs.moviesListEl.innerHTML = '';
+}
+
+function renderLibraryResults(renderArray, page = 1) {
+  clearMoviesList();
+
+  const moviesPerPage = 3;
+
+  renderArray.forEach((id, index) => {
+    if (
+      index >= page * moviesPerPage - moviesPerPage &&
+      index <= page * moviesPerPage - 1
+    ) {
+      getMovie(id);
+    }
+  });
+
+  const myPagination = new Pagination(refs.paginationContainer, {
+    totalItems: renderArray.length,
+    itemsPerPage: moviesPerPage,
+    visiblePages: 4,
+    page: page,
+    centerAlign: true,
+    usageStatistics: false,
+  });
+
+  myPagination.on('afterMove', function (eventData) {
+    renderLibraryResults(renderArray, eventData.page);
+  });
+
+  scrollToTop();
+}
+
+function scrollToTop() {
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth',
+  });
+}
+
+// refs.watchedBtnEl.classList.add('active');
+
+// refs.buttonsBoxEl.addEventListener('click', onBtnClick);
+
+// function onBtnClick(event) {
+//   event.preventDefault();
+
+//   if (event.target.nodeName !== 'BUTTON') {
+//     return;
+//   }
+
+//   if (!event.target.classList.contains('active')) {
+//     refs.buttonsBoxEl.querySelector('.active').classList.remove('active');
+//     event.target.classList.add('active');
+//   }
+
+//   if (event.target.classList.contains('js-watched')) {
+//     onWatchedBtnClick();
+//   }
+
+//   console.log(event.target);
+// }
+
+// function onWatchedBtnClick() {
+//   const watchedMoviesStr = localStorage.getItem('watched');
+
+//   if (watchedMovies) {
+//     const watchedMoviesArr = JSON.parse(watchedMoviesStr);
+//   }
+
+//   refs.moviesListEl.innerHTML = '<p>There is nothing in the watched list.</p>';
+// }
+
+// function onQueueBtnClick() {}

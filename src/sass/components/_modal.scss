@@ -119,6 +119,11 @@
     color: $primary-white-color;
     border: none;
   }
+  &.clicked {
+    background: $btn-active-color;
+    color: $primary-white-color;
+    border: none;
+  }
 
   @media screen and (min-width: 1024px) {
     min-width: 142px;
