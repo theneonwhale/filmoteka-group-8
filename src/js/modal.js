@@ -25,23 +25,78 @@ refs.cardsContainer.addEventListener('click', onCardClick);
 refs.backdrop.addEventListener('click', onBackdropClick);
 refs.modal.addEventListener('click', onModalBtnsClick);
 
+// function checkIfFilmAlreadyAdded() {
+//   const watchedMovies = new Set(
+//     JSON.parse(localStorage.getItem(WATCHED_MOVIES_STORAGE)),
+//   );
+//   if (watchedMovies.has(currentSelectedMovieId)) {
+//     console.log(refs.watchedBtn);
+//   }
+// }
+
 function onModalBtnsClick(e) {
   if (e.target.classList.contains('watched-btn')) {
-    // localStorage.setItem(WATCHED_MOVIE, opendMovieId);
+    e.target.classList.remove('watched-btn');
+    addMovieToWatched();
+    setTimeout(() => {
+      e.target.classList.add('remove-from-watched');
+    }, 0);
     e.target.classList.add('clicked');
     e.target.textContent = 'remove from watched';
-
-    addMovieToWatched();
+  }
+  if (e.target.classList.contains('remove-from-watched')) {
+    e.target.textContent = 'remove from watched';
+    e.target.classList.remove('remove-from-watched');
+    e.target.classList.add('watched-btn');
+    deleteMovieFromWatched();
+    setTimeout(() => {
+      e.target.classList.add('watched-btn');
+      e.target.classList.remove('clicked');
+      e.target.textContent = 'add to watched';
+    }, 0);
   }
   if (e.target.classList.contains('queue-btn')) {
-    // localStorage.setItem(QUEUE_MOVIE, opendMovieId);
+    e.target.classList.remove('queue-btn');
+    addMovieToQueued();
+    setTimeout(() => {
+      e.target.classList.add('remove-from-queue');
+    }, 0);
     e.target.classList.add('clicked');
     e.target.textContent = 'remove from queue';
-
-    addMovieToQueued();
+  }
+  if (e.target.classList.contains('remove-from-queue')) {
+    e.target.textContent = 'remove from queued';
+    e.target.classList.remove('remove-from-queue');
+    deleteMovieFromQueued();
+    setTimeout(() => {
+      e.target.classList.add('queue-btn');
+      e.target.classList.remove('clicked');
+      e.target.textContent = 'add to queue';
+    }, 0);
   }
 }
 
+function deleteMovieFromWatched() {
+  const watchedMovies = new Set(
+    JSON.parse(localStorage.getItem(WATCHED_MOVIES_STORAGE)),
+  );
+  watchedMovies.delete(currentSelectedMovieId);
+  localStorage.setItem(
+    WATCHED_MOVIES_STORAGE,
+    JSON.stringify([...watchedMovies.values()]),
+  );
+}
+
+function deleteMovieFromQueued() {
+  const queuedMovies = new Set(
+    JSON.parse(localStorage.getItem(QUEUE_MOVIES_STORAGE)),
+  );
+  queuedMovies.delete(currentSelectedMovieId);
+  localStorage.setItem(
+    QUEUE_MOVIES_STORAGE,
+    JSON.stringify([...queuedMovies.values()]),
+  );
+}
 function addMovieToQueued() {
   // remove movie from watched list
   const watchedMovies = new Set(
@@ -94,6 +149,7 @@ function onCardClick(e) {
   e.preventDefault();
   fetchFilm(id);
   refs.backdrop.classList.add('opened');
+  // checkIfFilmAlreadyAdded();
   window.addEventListener('keydown', onEscBtnClick);
 }
 
