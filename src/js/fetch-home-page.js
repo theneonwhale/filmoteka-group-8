@@ -45,6 +45,7 @@ fetchDayMovies().then(responce => {
         renderResults(responce.results);
       })
       .catch(console.log);
+    scrollToTop();
   });
 });
 
@@ -84,6 +85,13 @@ function renderResults(results) {
       movieObj.genre_ids.splice(0, movieObj.genre_ids.length, ...tempArr);
     }
   });
-
+  console.log(results);
   movieListEL.insertAdjacentHTML('afterbegin', movieItemsTpl(results));
+}
+
+function scrollToTop() {
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth',
+  });
 }

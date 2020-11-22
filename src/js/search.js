@@ -27,7 +27,7 @@ function fetchGenreIds() {
 
 function fetchFilm(search, page = 1) {
   return fetch(
-    `https://api.themoviedb.org/3/search/movie?api_key=726653b8cacb73d155407508fdc35e60&query=${search}&page=${page}&include_adult=false`,
+    `${BASE_URL}search/movie?api_key=${API_KEY}&query=${search}&page=${page}&include_adult=false`,
   ).then(response => response.json());
 }
 
@@ -36,12 +36,12 @@ refs.inputField.addEventListener('input', debounce(getFilmData, 500));
 function getFilmData(e) {
   // refs.spinner.classList.add('active');
   if (e.target.value) {
-    fetchFilm(e.target.value).then(responce => {
-      if (!responce.results.length) {
+    fetchFilm(e.target.value).then(response => {
+      if (!response.results.length) {
         refs.errorEl.style.display = 'block';
       } else {
         const myPagination = new Pagination(paginationContainer, {
-          totalItems: responce.total_pages,
+          totalItems: response.total_pages,
           itemsPerPage: 20,
           visiblePages: 4,
           centerAlign: true,
@@ -51,17 +51,18 @@ function getFilmData(e) {
           let currentPage = eventData.page;
 
           fetchFilm(e.target.value, currentPage).then(response => {
-            console.log(responce.results);
+            console.log(response.results);
 
             const cardMarkup = movieItemsTpl(response.results);
             refs.container.insertAdjacentHTML('afterbegin', cardMarkup);
           });
+          scrollToTop();
         });
 
         refs.errorEl.style.display = 'none';
         refs.container.innerHTML = '';
 
-        responce.results.forEach(movieObj => {
+        response.results.forEach(movieObj => {
           movieObj.release_date = movieObj.release_date.slice(0, 4);
           if (movieObj.genre_ids.length === 0) {
             movieObj.genre_ids.push('No genre');
@@ -99,12 +100,19 @@ function getFilmData(e) {
           }
         });
 
-        const cardMarckup = movieItemsTpl(responce.results);
-        refs.container.insertAdjacentHTML('afterbegin', cardMarckup);
+        const cardMarkup = movieItemsTpl(response.results);
+        refs.container.insertAdjacentHTML('afterbegin', cardMarkup);
         // refs.spinner.classList.remove('active');
       }
     });
   } else if (e.target.value === '') {
     location.reload();
   }
+}
+
+function scrollToTop() {
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth',
+  });
 }
