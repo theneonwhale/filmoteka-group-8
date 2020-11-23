@@ -4,7 +4,7 @@ import getRefs from './get-refs';
 const BASE_URL = 'https://api.themoviedb.org/3/';
 const API_KEY = '726653b8cacb73d155407508fdc35e60';
 
-const refs = getRefs();
+let refs = getRefs();
 
 let currentSelectedMovieId = null;
 
@@ -21,66 +21,56 @@ refs.modal.addEventListener('click', onModalBtnsClick);
 
 function onModalBtnsClick(e) {
   if (e.target.classList.contains('watched-btn')) {
-    e.target.classList.remove('watched-btn');
-
     addMovieToWatched();
-
-    setTimeout(() => {
-      e.target.classList.add('remove-from-watched');
-    }, 0);
-
-    e.target.classList.add('clicked');
-
-    e.target.textContent = 'remove from watched';
+    renderQueueBtn();
+    renderRemoveFromWatchedBtn();
+    return;
   }
 
   if (e.target.classList.contains('remove-from-watched')) {
-    e.target.textContent = 'remove from watched';
-
-    e.target.classList.remove('remove-from-watched');
-
-    e.target.classList.add('watched-btn');
-
     deleteMovieFromWatched();
-
-    setTimeout(() => {
-      e.target.classList.add('watched-btn');
-
-      e.target.classList.remove('clicked');
-
-      e.target.textContent = 'add to watched';
-    }, 0);
+    renderAddToWatchedBtn();
+    return;
   }
 
   if (e.target.classList.contains('queue-btn')) {
-    e.target.classList.remove('queue-btn');
-
     addMovieToQueued();
-
-    setTimeout(() => {
-      e.target.classList.add('remove-from-queue');
-    }, 0);
-
-    e.target.classList.add('clicked');
-
-    e.target.textContent = 'remove from queue';
+    renderAddToWatchedBtn();
+    renderRemoveFromQueueBtn();
+    return;
   }
 
   if (e.target.classList.contains('remove-from-queue')) {
-    e.target.textContent = 'remove from queued';
-
-    e.target.classList.remove('remove-from-queue');
-
     deleteMovieFromQueued();
-
-    setTimeout(() => {
-      e.target.classList.add('queue-btn');
-
-      e.target.classList.remove('clicked');
-
-      e.target.textContent = 'add to queue';
-    }, 0);
+    renderQueueBtn();
   }
+}
+
+function renderQueueBtn() {
+  refs.queueBtn.classList.remove('clicked');
+  refs.queueBtn.classList.remove('remove-from-queue');
+  refs.queueBtn.classList.add('queue-btn');
+  refs.queueBtn.textContent = 'add to queue';
+}
+function renderRemoveFromWatchedBtn() {
+  refs.watchedBtn.classList.remove('watched-btn');
+  refs.watchedBtn.classList.add('remove-from-watched');
+  refs.watchedBtn.classList.add('clicked');
+  refs.watchedBtn.textContent = 'remove from watched';
+}
+
+function renderAddToWatchedBtn() {
+  refs.watchedBtn.classList.remove('remove-from-watched');
+  refs.watchedBtn.classList.remove('clicked');
+  refs.watchedBtn.classList.add('watched-btn');
+  refs.watchedBtn.textContent = 'add to watched';
+}
+
+function renderRemoveFromQueueBtn() {
+  refs.queueBtn.classList.remove('queue-btn');
+  refs.queueBtn.classList.add('remove-from-queue');
+  refs.queueBtn.classList.add('clicked');
+  refs.queueBtn.textContent = 'remove from queue';
 }
 
 function deleteMovieFromWatched() {
@@ -175,6 +165,7 @@ function onCardClick(e) {
   fetchFilm(id);
 
   refs.backdrop.classList.add('opened');
+
   // checkIfFilmAlreadyAdded();
   window.addEventListener('keydown', onEscBtnClick);
 }
@@ -221,10 +212,32 @@ function appendMarkup(movie) {
 
     movie.genres.splice(0, movie.genres.length, ...tempArr);
   }
-
-  refs.modalContent.insertAdjacentHTML('beforeend', modalTpl(movie));
+  const modalContent = modalTpl(movie);
+  refs.modalContent.insertAdjacentHTML('beforeend', modalContent);
+  refs = getRefs();
+  checkFilmInWatchedList();
+  checkFilmInQueuedList();
 }
 
+function checkFilmInWatchedList() {
+  const watchedMovies = new Set(
+    JSON.parse(localStorage.getItem(WATCHED_MOVIES_STORAGE)),
+  );
+
+  if (watchedMovies.has(currentSelectedMovieId)) {
+    renderRemoveFromWatchedBtn();
+  }
+}
+
+function checkFilmInQueuedList() {
+  const queuedMovies = new Set(
+    JSON.parse(localStorage.getItem(QUEUE_MOVIES_STORAGE)),
+  );
+
+  if (queuedMovies.has(currentSelectedMovieId)) {
+    renderRemoveFromQueueBtn();
+  }
+}
 function closeModal() {
   refs.backdrop.classList.remove('opened');
 
